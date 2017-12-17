@@ -33,6 +33,12 @@ def ApEst(val1,val2):#Apontamento estático
         dm=dm-60
     return dh, dm
 
+def ApDin():
+    now=datetime.datetime.now()
+    dh,dm=now.hour, now.minute
+    return dh, dm
+
+
 def fill(f,val1,val2): #hr, min
     print("\n\n|-------------------------------------|")
     print("|Digite 1 para apontar dinamicamente  |")
@@ -41,7 +47,7 @@ def fill(f,val1,val2): #hr, min
     op=int(input())
     while op!=1 or op!=2:
         if op==1:
-            print("Aqui será o apontamento dinãmico")
+            dh,dm=ApDin()
             break
         elif op==2:
             dh,dm=ApEst(val1,val2)
