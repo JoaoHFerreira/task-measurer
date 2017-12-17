@@ -11,15 +11,33 @@ def cabec(val1,val2):#hora de início do colaborador, hh/mm
             val2=str(val2)
         return val1, val2
 
+def hrdin():
+    now=datetime.datetime.now()
+    dh,dm=now.hour,now.minute
+    return dh, dm
+
 def fill(f,val1,val2): #hr, min
     print("\n\n","Digite uma breve descrição da atividade:")
     av=input(str()) #atividade
     print("\n\n","Tempo da atividade em horas")
     dh=int(input()) #duração horas
+    if dh>12:
+        while dh>12:
+            print("As atividades devem ser detalhadas não podendo ser iguais ou maiores a 12 horas")
+            print("\n\n","Tempo da atividade em horas")
+            dh=int(input()) #duração horas
     dh=dh+val1
     print("\n\n","Tempo da atividade em minutos")
     dm=int(input()) #duração minutos
+    if dm>59:
+        while dm>59:
+            print("O tempo máximo em minutos eh '59'")
+            print("\n\n","Tempo da atividade em minutos")
+            dm=int(input()) #duração minutos
     dm=dm+val2
+    if dm>60:
+        dh=dh+1
+        dm=dm-60
     dh,dm=cabec(dh,dm)
     val1,val2=cabec(val1,val2)
     f.write(val1+val2+" - "+dh+dm+" -- "+av+"\n")
@@ -29,7 +47,7 @@ def read(val1, val2):# nome do arquivo, valor inicial da string, valor final da 
     f=open(name,"r")
     value=int(f.readlines()[-1][val1:val2] ) #valor ultima hora
     f.close
-    return value
+    return valuecat
 
 def MontaTitulo():
     now=datetime.datetime.now()
@@ -41,30 +59,48 @@ def MontaTitulo():
     name=a+"."+dv[0]+"."+dv[1]+"."+dv[2]+".txt"
     return name
 
+def visu():
+    name=MontaTitulo()
+    try:
+        f=open(name,"r")
+        print("\n\n")
+        for i in f.readlines():
+            print (i)
+        f.close
+    except FileNotFoundError as x:
+        print("\n\nNÃO EXISTEM REGISTROS")
+    print("\n\n")
+    print("\n\n|-------------------------------------------------|")
+    print("|Digite 1 para finalizar                          |")
+    print("|Digite outra tecla para voltar ao menu principal |")
+    print("|-------------------------------------------------|\n\n")
+    op=int(input())
+    if op==1:
+        exit()
+    else:
+        menu()
+
+
+
 
 def main():
     name=MontaTitulo()
     try:
         f=open(name,"x")
-        fill(f,8,0) #Hora de início padrão//(hora,minutos)
+        print("Digite hora de inicio do trabalho:")
+        hin=int(input())
+        print("\n\n","Digite minutos de inicio do trabalho:")
+        minn=int(input())
+        fill(f,hin,minn) #Hora de início padrão//(hora,minutos)
     except FileExistsError as x:
-        vh=read(name,8,10) #valor da ultima hora
-        vm=read(name,11,13)#valor do ultimo minuto
+        vh=read(8,10) #posição da ultima hora
+        vm=read(11,13)#posição do ultimo minuto
         f=open(name,"a")
-        fill(vh,vm)
+        fill(f,vh,vm)
     f.close
-
-def visu():
-    name=MontaTitulo()
-    f=open(name,"r")
-    for i in f.readlines():
-        print (i)
-    f.close
-
-
 
 def menu():
-    print("|-------------------------------------|")
+    print("\n\n|-------------------------------------|")
     print("|Digite 1 para apontar horas          |")
     print("|Digite 2 para visualizar apontamentos|")
     print("|Digite 3 para instruções             |")
@@ -72,11 +108,19 @@ def menu():
     print("|-------------------------------------|\n\n")
 
     op=int(input())
-    if op==1:
-        main()
-    elif op==2:
-        visu()
-    else:
+    if op!=4:
+        while  op!=4:
+            if op==1:
+                main()
+            elif op==2:
+                visu()
+            menu()
+            op=int(input())
         exit()
 
 menu()
+
+# print("\n\n|-------------------------------------|")
+# print("|Digite 1 para apontar dinamicamente  |")
+# print("|Digite 2 para apontar estaticamente|")
+# print("|-------------------------------------|\n\n")
