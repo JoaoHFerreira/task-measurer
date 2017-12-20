@@ -28,7 +28,7 @@ def ApEst(val1,val2):#Apontamento estático
             print("\n\n","Tempo da atividade em minutos")
             dm=int(input()) #duração minutos
     dm=dm+val2
-    if dm>60:
+    if dm>59:
         dh=dh+1
         dm=dm-60
     return dh, dm
@@ -40,19 +40,20 @@ def ApDin():
 
 
 def fill(f,val1,val2): #hr, min
-    print("\n\n|-------------------------------------|")
-    print("|Digite 1 para apontar dinamicamente  |")
-    print("|Digite 2 para apontar estaticamente|")
-    print("|-------------------------------------|\n\n")
-    op=int(input())
+    op=0
+    #Enquanto não for preenchido com valor certo, loop
     while op!=1 or op!=2:
+        print("\n\n|-------------------------------------|")
+        print("|Digite 1 para apontar dinamicamente  |")
+        print("|Digite 2 para apontar estaticamente|")
+        print("|-------------------------------------|\n\n")
+        op=int(input())
         if op==1:
             dh,dm=ApDin()
             break
         elif op==2:
             dh,dm=ApEst(val1,val2)
             break
-        fill(f,val1,val2)
     print("\n\n","Digite uma breve descrição da atividade:")
     av=input(str()) #atividade
     dh,dm=cabec(dh,dm)
@@ -62,6 +63,7 @@ def fill(f,val1,val2): #hr, min
 def read(val1, val2):# nome do arquivo, valor inicial da string, valor final da string
     name=MontaTitulo()
     f=open(name,"r")
+
     value=int(f.readlines()[-1][val1:val2] ) #valor ultima hora
     f.close
     return value
@@ -98,8 +100,6 @@ def visu():
         menu()
 
 
-
-
 def main():
     name=MontaTitulo()
     try:
@@ -132,7 +132,7 @@ def menu():
             elif op==2:
                 visu()
             menu()
-            op=int(input())
+    else:
         exit()
 
 menu()
