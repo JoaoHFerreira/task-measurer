@@ -38,6 +38,9 @@ def ApDin():
     dh,dm=now.hour, now.minute
     return dh, dm
 
+def ValAlm(f,av,val1,val2,dh,dm):#Valida preenchimento, para evitar marcação no horário de almoço
+    print("teste")
+
 
 def fill(f,val1,val2): #hr, min
     op=0
@@ -56,9 +59,22 @@ def fill(f,val1,val2): #hr, min
             break
     print("\n\n","Digite uma breve descrição da atividade:")
     av=input(str()) #atividade
-    dh,dm=cabec(dh,dm)
-    val1,val2=cabec(val1,val2)
-    f.write(val1+val2+" - "+dh+dm+" -- "+av+"\n")
+    if dh>12 and val1<12:
+        tot=((dh*60)+dm)-(12*60)#verifica total de minutos passados de 12
+        horas=(tot//60)#conversao para horas
+        minutos=30+tot-(horas*60)#conversao para minutos + acrescimo dos ultimos minutos
+        horas=horas+13 #+ acrescimo da ultima hora
+        if minutos>59:
+            minutos=minutos-60
+            horas=horas+1#
+        horas,minutos=cabec(horas,minutos)#cabec converte para string
+        val1,val2=cabec(val1,val2)
+        f.write(val1+val2+" - "+"12:00"+" -- "+av+"\n")
+        f.write("13:30"+" - "+horas+minutos+" -- "+av+"\n")
+    else:
+        dh,dm=cabec(dh,dm)
+        val1,val2=cabec(val1,val2)
+        f.write(val1+val2+" - "+dh+dm+" -- "+av+"\n")
 
 def read(val1, val2):# nome do arquivo, valor inicial da string, valor final da string
     name=MontaTitulo()
@@ -136,3 +152,4 @@ def menu():
         exit()
 
 menu()
+#teste de validacao
