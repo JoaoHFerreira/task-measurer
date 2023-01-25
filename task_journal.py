@@ -18,9 +18,8 @@ def ApEst(val1, val2):  # Apontamento estático
     dh = int(input())  # duração horas
     if dh > 12:
         while dh > 12:
-            print(
-                "As atividades devem ser detalhadas não podendo ser iguais ou maiores a 12 horas"
-            )
+            print("As atividades devem ser detalhadas,")
+            print("não podendo ser iguais ou maiores a 12 horas")
             print("\n\n", "Tempo da atividade em horas")
             dh = int(input())  # duração horas
     dh = dh + val1
@@ -66,7 +65,8 @@ def fill(f, val1, val2):  # hr, min
     f.write(val1 + val2 + " - " + dh + dm + " -- " + av + "\n")
 
 
-def read(val1, val2):  # nome do arquivo, valor inicial da string, valor final da string
+# nome do arquivo, valor inicial da string, valor final da string
+def read(val1, val2):
     name = MontaTitulo()
     f = open(name, "r")
 
@@ -78,7 +78,7 @@ def read(val1, val2):  # nome do arquivo, valor inicial da string, valor final d
 def MontaTitulo():
     now = datetime.datetime.now()
     a = "agenda"
-    y, m, d, h, mn = now.year, now.month, now.day, now.hour, now.minute
+    y, m, d = now.year, now.month, now.day
     dv = [y, m, d]  # DataValue
     for i in range(len(dv)):
         dv[i] = str(dv[i])
@@ -95,7 +95,7 @@ def visu():
             print(i)
         f.close
     except FileNotFoundError as x:
-        print("\n\nNÃO EXISTEM REGISTROS")
+        print(f"\n\nNÃO EXISTEM REGISTROS de {x}")
     print("\n\n")
     print("\n\n|-------------------------------------------------|")
     print("|Digite 1 para finalizar                           |")
@@ -118,6 +118,7 @@ def main():
         minn = int(input())
         fill(f, hin, minn)  # Hora de início padrão//(hora,minutos)
     except FileExistsError as x:
+        print(f"\n\nArquivo {x} já existe")
         vh = read(8, 10)  # posição da ultima hora
         vm = read(11, 13)  # posição do ultimo minuto
         f = open(name, "a")
