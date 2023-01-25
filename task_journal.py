@@ -135,15 +135,11 @@ def menu():
     print("|-------------------------------------|\n\n")
 
     op = int(input())
-    if op != 4:
-        while op != 4:
-            if op == 1:
-                main()
-            elif op == 2:
-                visu()
-            menu()
-    else:
-        exit()
-
+    while op != 4:
+        if op == 1:
+            main()
+        elif op == 2:
+            visu()
+        op = int(input())
 
 menu()
