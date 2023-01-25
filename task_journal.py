@@ -105,10 +105,10 @@ def visu():
     if op == 1:
         exit()
     else:
-        menu()
+        main()
 
 
-def main():
+def menu():
     name = MontaTitulo()
     try:
         f = open(name, "x")
@@ -126,7 +126,7 @@ def main():
     f.close
 
 
-def menu():
+def main():
     print("\n\n|-------------------------------------|")
     print("|Digite 1 para apontar horas          |")
     print("|Digite 2 para visualizar apontamentos|")
@@ -137,9 +137,11 @@ def menu():
     op = int(input())
     while op != 4:
         if op == 1:
-            main()
+            menu()
         elif op == 2:
             visu()
         op = int(input())
 
-menu()
+
+if __name__ == "__main__":
+    main()
