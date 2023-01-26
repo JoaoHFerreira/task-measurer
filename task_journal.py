@@ -1,3 +1,4 @@
+import msgs
 import datetime
 
 
@@ -14,21 +15,20 @@ def cabec(val1, val2):  # hora de início do colaborador, hh/mm
 
 
 def ApEst(val1, val2):  # Apontamento estático
-    print("\n\n", "Tempo da atividade em horas")
+    msgs.total_time_in_hours()
     dh = int(input())  # duração horas
     if dh > 12:
         while dh > 12:
-            print("As atividades devem ser detalhadas,")
-            print("não podendo ser iguais ou maiores a 12 horas")
-            print("\n\n", "Tempo da atividade em horas")
+            msgs.activity_max_time()
+            msgs.total_time_in_hours()
             dh = int(input())  # duração horas
     dh = dh + val1
-    print("\n\n", "Tempo da atividade em minutos")
+    msgs.total_time_in_minutes()
     dm = int(input())  # duração minutos
     if dm > 59:
         while dm > 59:
-            print("O tempo máximo em minutos eh '59'")
-            print("\n\n", "Tempo da atividade em minutos")
+            msgs.max_time_in_minutes()
+            msgs.total_time_in_minutes()
             dm = int(input())  # duração minutos
     dm = dm + val2
     if dm > 59:
@@ -47,10 +47,7 @@ def fill(f, val1, val2):  # hr, min
     op = 0
     # Enquanto não for preenchido com valor certo, loop
     while op != 1 or op != 2:
-        print("\n\n|-------------------------------------|")
-        print("|Digite 1 para apontar dinamicamente  |")
-        print("|Digite 2 para apontar estaticamente|")
-        print("|-------------------------------------|\n\n")
+        msgs.dynamic_or_static_menu()
         op = int(input())
         if op == 1:
             dh, dm = ApDin()
@@ -58,7 +55,7 @@ def fill(f, val1, val2):  # hr, min
         elif op == 2:
             dh, dm = ApEst(val1, val2)
             break
-    print("\n\n", "Digite uma breve descrição da atividade:")
+    msgs.activity_description()
     av = input(str())  # atividade
     dh, dm = cabec(dh, dm)
     val1, val2 = cabec(val1, val2)
@@ -96,11 +93,7 @@ def visu():
         f.close
     except FileNotFoundError as x:
         print(f"\n\nNÃO EXISTEM REGISTROS de {x}")
-    print("\n\n")
-    print("\n\n|-------------------------------------------------|")
-    print("|Digite 1 para finalizar                           |")
-    print("|Digite outro número para voltar ao menu principal |")
-    print("|-------------------------------------------------|\n\n")
+    msgs.roll_back_menu()
     op = int(input())
     if op == 1:
         exit()
@@ -112,9 +105,9 @@ def menu():
     name = MontaTitulo()
     try:
         f = open(name, "x")
-        print("Digite hora de inicio do trabalho:")
+        msgs.hour_init_time()
         hin = int(input())
-        print("\n\n", "Digite minutos de inicio do trabalho:")
+        msgs.minutes_init_time()
         minn = int(input())
         fill(f, hin, minn)  # Hora de início padrão//(hora,minutos)
     except FileExistsError as x:
@@ -127,13 +120,7 @@ def menu():
 
 
 def main():
-    print("\n\n|-------------------------------------|")
-    print("|Digite 1 para apontar horas          |")
-    print("|Digite 2 para visualizar apontamentos|")
-    print("|Digite 3 para instruções             |")
-    print("|Digite 4 para sair                   |")
-    print("|-------------------------------------|\n\n")
-
+    msgs.main_menu()
     op = int(input())
     if op != 4:
         while op != 4:
