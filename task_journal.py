@@ -135,12 +135,15 @@ def main():
     print("|-------------------------------------|\n\n")
 
     op = int(input())
-    while op != 4:
-        if op == 1:
-            menu()
-        elif op == 2:
-            visu()
-        op = int(input())
+    if op != 4:
+        while op != 4:
+            if op == 1:
+                menu()
+            elif op == 2:
+                visu()
+            main()
+    else:
+        exit()
 
 
 if __name__ == "__main__":
